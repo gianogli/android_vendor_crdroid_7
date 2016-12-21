@@ -253,7 +253,11 @@ PRODUCT_COPY_FILES += \
 
 # Custom crDroid packages
 PRODUCT_PACKAGES += \
-    OmniSwitch
+    OmniSwitch \
+    masquerade
+
+PRODUCT_PROPERTY_OVERRIDES := \
+    ro.substratum.verified=true
 
 #DU Utils Library
 PRODUCT_PACKAGES += \
