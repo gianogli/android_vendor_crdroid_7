@@ -1,7 +1,5 @@
 PRODUCT_BRAND ?= crdroidandroid
 
-PRODUCT_BOOTANIMATION := vendor/cm/prebuilt/common/bootanimation/bootanimation.zip
-
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
@@ -238,9 +236,6 @@ PRODUCT_PACKAGES += \
     su
 endif
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.root_access=0
-
 DEVICE_PACKAGE_OVERLAYS += vendor/cm/overlay/common
 
 # Don't compile SystemUITests
@@ -282,27 +277,25 @@ PRODUCT_VERSION_MAJOR = 7
 PRODUCT_VERSION_MINOR = 1.1
 
 # Increase CR Version with each major release.
-CR_VERSION := 1.8
+CR_VERSION := 2.0
 
 
-CM_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-v$(CR_VERSION)-UNOFFICIAL
-CM_DISPLAY_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-v$(CR_VERSION)-UNOFFICIAL
-
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.crdroid.version=$(CM_VERSION) \
-  ro.modversion=$(CM_VERSION)
-
-ifeq ($(OTA_PACKAGE_SIGNING_KEY),)
-    PRODUCT_EXTRA_RECOVERY_KEYS += \
-        vendor/cm/build/target/product/security/cm \
-        vendor/cm/build/target/product/security/cm-devkey
-endif
+LINEAGE_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-v$(CR_VERSION)-UNOFFICIAL
+LINEAGE_DISPLAY_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-v$(CR_VERSION)-UNOFFICIAL
 
 PRODUCT_PROPERTY_OVERRIDES += \
-  ro.crdroid.display.version=$(CM_DISPLAY_VERSION)
+  ro.crdroid.version=$(LINEAGE_VERSION) \
+  ro.modversion=$(LINEAGE_VERSION)
+
+PRODUCT_EXTRA_RECOVERY_KEYS += \
+  vendor/cm/build/target/product/security/lineage
+
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.crdroid.display.version=$(LINEAGE_DISPLAY_VERSION)
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/cm/config/partner_gms.mk
 -include vendor/cyngn/product.mk
 
 $(call prepend-product-if-exists, vendor/extra/product.mk)
+$(call inherit-product, vendor/cm/config/bootanimation.mk)
