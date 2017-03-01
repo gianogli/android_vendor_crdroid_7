@@ -124,9 +124,7 @@ PRODUCT_PACKAGES += \
 # Custom CM packages
 PRODUCT_PACKAGES += \
     AudioFX \
-    CMFileManager \
     CMSettingsProvider \
-    CMWallpapers \
     Eleven \
     ExactCalculator \
     LiveLockScreenService \
@@ -241,7 +239,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     OmniStyle \
     OmniSwitch \
-    masquerade
+    masquerade \
+    libprotobuf-cpp-full
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.substratum.verified=true
