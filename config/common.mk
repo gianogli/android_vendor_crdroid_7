@@ -245,6 +245,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.substratum.verified=true
 
+# Enable Google Assistant
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.opa.eligible_device=true
+
 #DU Utils Library
 PRODUCT_PACKAGES += \
     org.dirtyunicorns.utils
@@ -269,7 +273,7 @@ PRODUCT_VERSION_MAJOR = 7
 PRODUCT_VERSION_MINOR = 1.1
 
 # Increase CR Version with each major release.
-CR_VERSION := 2.2
+CR_VERSION := 2.3
 
 
 LINEAGE_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-v$(CR_VERSION)-UNOFFICIAL
