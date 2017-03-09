@@ -239,7 +239,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     OmniStyle \
     OmniSwitch \
-    masquerade \
+    ThemeInterfacer \
     libprotobuf-cpp-full
 
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -255,10 +255,6 @@ PRODUCT_PACKAGES += \
  
 PRODUCT_BOOT_JARS += \
     org.dirtyunicorns.utils
-
-# crDroid Maintainers list
-PRODUCT_COPY_FILES += \
-    vendor/cm/Maintainers.txt:system/etc/Maintainers.txt
 
 # Proprietary latinime lib needed for swyping
 PRODUCT_COPY_FILES += \
