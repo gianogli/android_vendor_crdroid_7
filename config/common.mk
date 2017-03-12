@@ -233,7 +233,7 @@ EXCLUDE_SYSTEMUI_TESTS := true
 
 # Adaway
 PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/Adaway/Adaway.apk:system/app/Adaway/Adaway.apk
+    vendor/cm/prebuilt/AdAway/AdAway.apk:system/app/AdAway/AdAway.apk
 
 # Custom crDroid packages
 PRODUCT_PACKAGES += \
@@ -270,7 +270,7 @@ PRODUCT_VERSION_MAJOR = 7
 PRODUCT_VERSION_MINOR = 1.1
 
 # Increase CR Version with each major release.
-CR_VERSION := 2.3
+CR_VERSION := 2.4
 
 
 LINEAGE_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-v$(CR_VERSION)-UNOFFICIAL
