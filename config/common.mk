@@ -26,7 +26,6 @@ ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
 endif
 
-
 ifneq ($(filter yukon rhine shinano kanuti kitakami loire tone,$(PRODUCT_PLATFORM)),)
 # Disable ADB authentication on Sony Targets
 ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
@@ -60,7 +59,6 @@ PRODUCT_COPY_FILES += \
 
 # init.d support
 PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner \
     vendor/cm/prebuilt/common/bin/sysinit:system/bin/sysinit
 
 ifneq ($(TARGET_BUILD_VARIANT),user)
@@ -92,13 +90,14 @@ PRODUCT_COPY_FILES += \
 # Include CM audio files
 include vendor/cm/config/cm_audio.mk
 
-# Theme engine
-include vendor/cm/config/themes_common.mk
-
 ifneq ($(TARGET_DISABLE_CMSDK), true)
 # CMSDK
 include vendor/cm/config/cmsdk_common.mk
 endif
+
+# Bootanimation
+PRODUCT_PACKAGES += \
+    bootanimation.zip
 
 # Required CM packages
 PRODUCT_PACKAGES += \
@@ -125,6 +124,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     AudioFX \
     CMSettingsProvider \
+    CustomTiles \
     Eleven \
     ExactCalculator \
     LiveLockScreenService \
@@ -222,73 +222,19 @@ PRODUCT_BOOT_JARS += \
 ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_PACKAGES += \
     procmem \
-    procrank \
-    su
+    procrank
 endif
 
 DEVICE_PACKAGE_OVERLAYS += vendor/cm/overlay/common
 
-# Don't compile SystemUITests
-EXCLUDE_SYSTEMUI_TESTS := true
-
-# Adaway
-PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/AdAway/AdAway.apk:system/app/AdAway/AdAway.apk
-
-# Custom crDroid packages
-PRODUCT_PACKAGES += \
-    OmniJaws \
-    OmniStyle \
-    OmniSwitch \
-    ThemeInterfacer \
-    libprotobuf-cpp-full
-
-PRODUCT_PROPERTY_OVERRIDES := \
-    ro.substratum.verified=true
-
-# Enable Google Assistant
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opa.eligible_device=true
-
-#DU Utils Library
-PRODUCT_PACKAGES += \
-    org.dirtyunicorns.utils
- 
-PRODUCT_BOOT_JARS += \
-    org.dirtyunicorns.utils
-
-# Proprietary latinime lib needed for swyping
-PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/common/lib/libjni_latinimegoogle.so:system/lib/libjni_latinimegoogle.so
-
-# Enable storage manager
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.storage_manager.enabled=1
-
-# Product version should match Android version
-PRODUCT_VERSION_MAJOR = 7
-PRODUCT_VERSION_MINOR = 1.1
-
-# Increase CR Version with each major release.
-CR_VERSION := 2.4
-
-
-LINEAGE_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(CM_BUILD)-v$(CR_VERSION)-UNOFFICIAL
-LINEAGE_DISPLAY_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-v$(CR_VERSION)-UNOFFICIAL
-
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.crdroid.version=$(LINEAGE_VERSION) \
-  ro.modversion=$(LINEAGE_VERSION)
-
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-  vendor/cm/build/target/product/security/lineage
-
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.crdroid.display.version=$(LINEAGE_DISPLAY_VERSION)
+    vendor/cm/build/target/product/security/lineage
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/cm/config/partner_gms.mk
+-include vendor/cm-priv/keys/keys.mk
 -include vendor/cyngn/product.mk
 
 $(call prepend-product-if-exists, vendor/extra/product.mk)
-$(call inherit-product, vendor/cm/config/bootanimation.mk)
+$(call inherit-product, vendor/cm/config/crdroid.mk)
+$(call inherit-product, vendor/addons/config.mk)
