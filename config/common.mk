@@ -96,6 +96,11 @@ ifneq ($(TARGET_DISABLE_CMSDK), true)
 include vendor/cm/config/cmsdk_common.mk
 endif
 
+# TWRP
+ifeq ($(WITH_TWRP),true)
+include vendor/cm/config/twrp.mk
+endif
+
 # Bootanimation
 PRODUCT_PACKAGES += \
     bootanimation.zip
@@ -106,8 +111,7 @@ PRODUCT_PACKAGES += \
     CMAudioService \
     CMParts \
     Development \
-    Profiles \
-    WeatherManagerService
+    Profiles
 
 # Optional CM packages
 PRODUCT_PACKAGES += \
@@ -125,14 +129,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     AudioFX \
     CMSettingsProvider \
-    CustomTiles \
     ExactCalculator \
     Jelly \
-    LiveLockScreenService \
-    LockClock \
     Trebuchet \
-    WallpaperPicker \
-    WeatherProvider
+    WallpaperPicker
 
 # Exchange support
 PRODUCT_PACKAGES += \
@@ -140,12 +140,14 @@ PRODUCT_PACKAGES += \
 
 # Extra tools in CM
 PRODUCT_PACKAGES += \
+    7z \
     bash \
     bzip2 \
     curl \
     fsck.ntfs \
     gdbserver \
     htop \
+    lib7z \
     libsepol \
     micro_bench \
     mke2fs \
@@ -157,6 +159,7 @@ PRODUCT_PACKAGES += \
     sqlite3 \
     strace \
     tune2fs \
+    unrar \
     unzip \
     vim \
     wget \
